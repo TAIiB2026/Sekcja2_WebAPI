@@ -1,5 +1,7 @@
 
 using Contracts;
+using DAL;
+using Services.Database;
 using Services.Memory;
 
 namespace Lab7Sekcja2
@@ -17,8 +19,11 @@ namespace Lab7Sekcja2
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDbContext<PeopleContext>();
+
             //builder.Services.AddTransient<IPeopleService, PeopleMemoryRepository>();
-            builder.Services.AddScoped<IPeopleService, PeopleMemoryRepository>();
+            //builder.Services.AddScoped<IPeopleService, PeopleMemoryRepository>();
+            builder.Services.AddScoped<IPeopleService, PeopleDatabaseRepository>();
             //builder.Services.AddSingleton<IPeopleService, PeopleMemoryRepository>();
 
             const string CORS_POLICY_NAME = "myCORS";

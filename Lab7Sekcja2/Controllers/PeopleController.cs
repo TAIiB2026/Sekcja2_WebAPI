@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Contracts.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 
 namespace Lab7Sekcja2.Controllers
 {
@@ -39,6 +40,20 @@ namespace Lab7Sekcja2.Controllers
         {
             var res = await peopleService.PostAsync(newPersonDTO);
             return Ok(res);
+        }
+
+        [HttpGet("{id}/Addresses")] 
+        public async Task<IActionResult> GetAddressesAsync(int id)
+        {
+            return Ok(await this.peopleService.GetAddresses(id));
+        }
+
+
+        [HttpPost("{id}/Addresses")]
+        public async Task<IActionResult> GetAddressesAsync(int id, [FromBody] NewAddressDTO newAddressDTO)
+        {
+            await this.peopleService.PostAddressAsync(id, newAddressDTO.PostalCode, newAddressDTO.City, newAddressDTO.Street);
+            return Ok();
         }
     }
 }
